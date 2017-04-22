@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.http import Http404
 # from django.shortcuts import get_object_or_404
 from .serializers import (UserSerializer,
                         UserDetailSerializer, 
@@ -28,15 +29,16 @@ class UserListView(ListAPIView):
     """
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
-    permission_classes = (IsAdminUser,)
+    # permission_classes = (IsAdminUser,)
 
 
 class UserDetailView(APIView):
     """
     Retrieve, update a user instance.
     """
+    queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserDetailSerializer
-    permission_classes = (IsOwnerOrReadOnly,)
+    # permission_classes = (IsOwnerOrReadOnly, )
 
     def get_object(self, pk):
         try:
@@ -65,24 +67,18 @@ class UserCreateAPIView(CreateAPIView):
     """
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserCreateSerializer
-    permission_classes = (AllowAny,)
 
 
 class UserLoginAPIView(APIView):
-    """
-    API for login of users.
-    """
     serializer_class = UserLoginSerializer
-    permission_classes = (AllowAny,)
+
 
     def post(self, request, *args, **kwargs):
-        data = request.data 
+        data =  request.data
         serializer = UserLoginSerializer(data=data)
-
         if serializer.is_valid(raise_exception=True):
             new_data = serializer.data
             return Response(new_data, status=HTTP_200_OK)
-
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
 

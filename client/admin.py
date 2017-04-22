@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext, ugettext_lazy as _
 from .models import Profile
-
+from .forms import UserRegisterForm
 
 class ProfileInline(admin.StackedInline):
     """ Profile user information. """
@@ -18,6 +18,7 @@ class UserAdmin(admin.ModelAdmin):
     list_filter = ('is_active', 'groups')
     readonly_fields = ('date_joined','last_login')
     actions = ['activate']
+    form = UserRegisterForm
     inlines = (ProfileInline, )
 
     def get_balance(self, instance):
@@ -34,16 +35,14 @@ class UserAdmin(admin.ModelAdmin):
         Set the permission field for managers only is_active, 
         for superuser the extended permission. 
         """
-        if not obj:
-            return self.add_fieldsets
-
+        
         if request.user.is_superuser:
             perm_fields = ('is_active', 'is_staff', 'is_superuser',
                            'groups', 'user_permissions')
         else:
             perm_fields = ('is_active',)
 
-        return [(None, {'fields': ('username',)}),
+        return [(None, {'fields': ('username', 'password')}),
                 (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
                 (_('Permissions'), {'fields': perm_fields}),
                 (_('Important dates'), {'fields': ('last_login', 'date_joined')})]

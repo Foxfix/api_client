@@ -6,8 +6,9 @@ from django.contrib.auth import (
         logout,
     )
 
-from django.contrib.auth.forms import UserCreationForm
+
 from django.contrib.auth.models import User
+from django.forms import ModelForm
 
 
 class UserLoginForm(forms.Form):
@@ -27,6 +28,7 @@ class UserLoginForm(forms.Form):
                 raise forms.ValidationError("Пользователь не активен")
         return super(UserLoginForm, self).clean(*args, **kwargs)
 
+from django.contrib.auth.forms import UserCreationForm  
 
 class UserRegisterForm(UserCreationForm):
     first_name = forms.CharField(max_length=120)

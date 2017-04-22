@@ -5,7 +5,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
     Object-level permission to only allow owners of an object to edit it.
     """
     def has_object_permission(self, request, view, obj):
-        return obj.user_information.user == request.user
+        return obj.user == request.user
 
 # class IsUpdateProfile(permissions.BasePermission):
 #     def has_permission(self, request, view):

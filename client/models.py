@@ -19,14 +19,19 @@ def set_new_user_inactive(sender, instance, **kwargs):
 
 class Profile(models.Model):
     """ Profile user information. """
+    SHIRT_SIZES = (
+        ('Close', 'Close'),
+        ('Open', 'Open'),
+    )
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_information')
     balance = models.DecimalField(max_digits=20,decimal_places=4,default=Decimal('0.0000'))
-    passport_number = models.CharField(max_length=15, default="BC123456")
-    accaunt = models.BooleanField(default=True)
+    passport_number = models.CharField(max_length=15, default="000000")
+    accaunt = models.CharField(max_length=10, choices=SHIRT_SIZES, default='Open')
     
     @receiver(post_save, sender=User)
     def create_or_update_user_profile(sender, instance, created, **kwargs):
         if created:
             Profile.objects.create(user=instance)
         instance.user_information.save()
+
 
