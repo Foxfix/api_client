@@ -10,10 +10,6 @@
 
 ![api](https://goo.gl/lHXE8U)
 
-доступно лишь админу. При выходе из админки, получим
-
-![api](https://wmpics.pics/di-48SX.png)
-
     http://127.0.0.1:8090/api/register/
 
 ![api](https://wmpics.pics/di-WSHS.png)
@@ -24,10 +20,8 @@
 
     http://127.0.0.1:8090/api/20/  id
     
-![api](https://wmpics.pics/di-PL8U.png)
-
-если войдем под личным аккаунтом, 
-![api](https://wmpics.pics/di-D4JC.png)
+если войдем под личным аккаунтом, можем изменять определенные данные профиля.
+![api](http://ipic.su/img/img7/fs/scrin.1492894317.png) 
 
 Сразу после регистрации пользователь не активен, его активируют из админки
  ![api](https://wmpics.pics/di-0V5T.png)
@@ -43,9 +37,11 @@
     
     При создании по умолчанию пользователь не активен, is_active=False. 
     
-    Но accaunt = True. Пользователь может сменить единоразово на accaunt = False. 
+    Но accaunt = Open. Пользователь может сменить на accaunt = Close, закрыв его. 
     
-    В админке это отразится и даст сигнал админу на удаление аккаунта.
+    После закрытия пользователем аккаунта, админ может удалять его.
+    
+    ![api](http://ipic.su/img/img7/fs/close.1492894356.png)
     
     
 ![api](https://wmpics.pics/di-YOUD.png) 
