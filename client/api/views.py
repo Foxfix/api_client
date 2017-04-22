@@ -18,7 +18,6 @@ from rest_framework.generics import (ListAPIView,
 
 
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
-from .permissions import IsOwnerOrReadOnly 
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -29,7 +28,7 @@ class UserListView(ListAPIView):
     """
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
-    # permission_classes = (IsAdminUser,)
+    permission_classes = (IsAdminUser,)
 
 
 class UserDetailView(APIView):
@@ -38,7 +37,6 @@ class UserDetailView(APIView):
     """
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserDetailSerializer
-    # permission_classes = (IsOwnerOrReadOnly, )
 
     def get_object(self, pk):
         try:
